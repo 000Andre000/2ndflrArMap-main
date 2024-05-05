@@ -4,19 +4,39 @@ using UnityEngine.AI;
 
 public class NavMeshVisualizer : MonoBehaviour
 {
-    [SerializeField] private int src, dest;
     public GameObject[] destination;
     private LineRenderer lineRenderer;
     private NavMeshPath path;
-    private GameObject source;
+    public GameObject source;
+    public GameObject destinationObject;
+    private int sourceIndex, destinationIndex;
+
+    public void SetSource(int index)
+    {
+        sourceIndex = index;
+        Debug.Log("si:" + sourceIndex);
+    }
+
+    public void SetDestination(int index)
+    {
+        destinationIndex = index;
+        Debug.Log("di:" + destinationIndex);
+
+    }
+
 
     void Start()
     {
         destination = GameObject.FindGameObjectsWithTag("destination");
-        source = destination[src];
-        GameObject destinationObject = destination[dest];
+      
         lineRenderer = GetComponent<LineRenderer>();
         path = new NavMeshPath();
+    }
+
+    private void Update()
+    {
+        source = destination[sourceIndex];
+        destinationObject = destination[destinationIndex];
         DrawNavMesh(destinationObject);
     }
 
